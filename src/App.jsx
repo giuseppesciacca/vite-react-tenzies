@@ -3,10 +3,12 @@ import { nanoid } from "nanoid";
 import useWindowSize from "@rooks/use-window-size";
 import Confetti from 'react-confetti';
 import Die from "./components/Die";
+import Count from "./components/Count";
 
 function App() {
   const [dice, setDice] = useState(allNewDice);
   const [tenzies, setTenzies] = useState(false);
+  const [count, setCount] = useState(0);
   const { innerWidth, innerHeight, outerHeight, outerWidth } = useWindowSize();
 
   // <Die /> component loop
@@ -43,11 +45,13 @@ function App() {
     if (tenzies) {
       setDice(allNewDice);
       setTenzies(false)
+      setCount(0)
     } else {
       setDice(oldDice => oldDice.map(die => {
         return die.isHeld ? die :
           dieBluePrint()
       }))
+      setCount(oldCount => oldCount + 1)
     }
   }
 
@@ -89,6 +93,8 @@ function App() {
           width={innerWidth}
           height={innerHeight}
         />}
+
+        <Count count={count} />
 
         <h1 className="fw-bold">Tenzies</h1>
         <p className="fs-5 text-center">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
