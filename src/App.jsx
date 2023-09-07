@@ -117,11 +117,14 @@ function App() {
 
         <div className="dice_container p-3 gap-3">
 
-          {diceEl}
+          {count > 0 && diceEl}
 
         </div>
 
-        <button onClick={rollDice} className="btn btn-primary border-0 btn_roll"> {!tenzies ? 'Roll' : 'New Game'}
+        <button onClick={rollDice} className="btn btn-primary border-0 btn_roll">
+          {!tenzies && count === 0 || tenzies ?
+            'New Game' :
+            'Roll'}
         </button>
       </div>
 
