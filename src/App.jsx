@@ -4,24 +4,31 @@ import useWindowSize from "@rooks/use-window-size";
 import Confetti from 'react-confetti';
 import Die from "./components/Die";
 import Count from "./components/Count";
+import Timer from "./components/Timer";
 
 function App() {
   const [dice, setDice] = useState(allNewDice);
   const [tenzies, setTenzies] = useState(false);
   const [count, setCount] = useState(0);
-  const { innerWidth, innerHeight, outerHeight, outerWidth } = useWindowSize();
+  const [timer, setTimer] = useState(0);
+  const [lastTimer, setLastTimer] = useState(null);
+  const { innerWidth, innerHeight } = useWindowSize();
 
   // <Die /> component loop
   const diceEl = dice.map(die =>
     <Die key={die.id} isHeld={die.isHeld} holdDice={() => holdDice(die.id)} value={die.value} />
   );
 
+  /**
+   * 
+   */
   useEffect(() => {
     const allIsHeld = dice.every(die => die.isHeld === true);
     const allIsEqualValue = dice.every(die => die.value === dice[0].value);
 
     if (allIsHeld && allIsEqualValue) {
       setTenzies(true)
+      setLastTimer(timer)
     }
   }, [dice])
 
@@ -42,10 +49,17 @@ function App() {
    */
   function rollDice() {
 
+    if (!timer) {
+      setInterval(() => {
+        setTimer(oldTimer => oldTimer + 1)
+      }, 1000)
+    }
+
     if (tenzies) {
       setDice(allNewDice);
       setTenzies(false)
       setCount(0)
+      setTimer(0)
     } else {
       setDice(oldDice => oldDice.map(die => {
         return die.isHeld ? die :
@@ -95,6 +109,8 @@ function App() {
         />}
 
         <Count count={count} />
+
+        <Timer timer={timer} lastTimer={lastTimer} />
 
         <h1 className="fw-bold">Tenzies</h1>
         <p className="fs-5 text-center">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>

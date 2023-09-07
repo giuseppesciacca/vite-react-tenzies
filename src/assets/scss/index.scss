@@ -19,10 +19,18 @@ main {
             grid-template-rows: auto auto;
         }
 
-        .count {
+        .count,
+        .timer {
             position: absolute;
             top: 1%;
+        }
+
+        .count {
             right: 1%;
+        }
+
+        .timer {
+            left: 1%;
         }
 
         .die {
