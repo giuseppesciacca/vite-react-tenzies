@@ -2,6 +2,10 @@
 
 ## Tenzies game
 
+### "Roll until all dice are the same. Click each die to freeze it at its current value between rolls"
+
+<hr>
+
 Simple game I made to pratice with React. 
 I also used external libraries such as useWindowSize, Confetti, nanoid.
 
