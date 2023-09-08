@@ -81,7 +81,7 @@ function App() {
     if (tenzies) {
       setDice(allNewDice);
       setTenzies(false)
-      setCount(0)
+      setCount(1)
       setTimer(0)
       setLastTimer(0)
     } else {
@@ -149,7 +149,7 @@ function App() {
         </div>
 
         <button onClick={rollDice} className="btn btn-primary border-0 btn_roll">
-          {!tenzies && count === 0 || tenzies ?
+          {!count > 0 || tenzies ?
             'New Game' :
             'Roll'}
         </button>
