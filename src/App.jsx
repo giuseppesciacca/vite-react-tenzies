@@ -12,6 +12,8 @@ function App() {
   const [count, setCount] = useState(0);
   const [timer, setTimer] = useState(0);
   const [lastTimer, setLastTimer] = useState(null);
+  const [result, setResult] = useState(JSON.parse(localStorage.getItem("result")) || [])
+
   const { innerWidth, innerHeight } = useWindowSize();
 
   // <Die /> component loop
@@ -23,14 +25,34 @@ function App() {
    * 
    */
   useEffect(() => {
+
     const allIsHeld = dice.every(die => die.isHeld === true);
     const allIsEqualValue = dice.every(die => die.value === dice[0].value);
 
     if (allIsHeld && allIsEqualValue) {
       setTenzies(true)
       setLastTimer(timer)
-    }
+
+      const newResult = {
+        "timer": timer,
+        "count": count,
+      };
+
+      setResult(oldResult => [...oldResult, newResult])
+    };
+
   }, [dice])
+
+  /**
+   * load to localStorage the new result
+   */
+  useEffect(() => {
+    localStorage.setItem("result", JSON.stringify(result))
+
+    return () => {
+      localStorage.removeItem("result")
+    };
+  }, [result])
 
   /**
    * 
