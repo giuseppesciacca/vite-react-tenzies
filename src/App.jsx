@@ -5,6 +5,7 @@ import Confetti from 'react-confetti';
 import Die from "./components/Die";
 import Count from "./components/Count";
 import Timer from "./components/Timer";
+import Record from "./components/Record";
 
 function App() {
   const [dice, setDice] = useState(allNewDice);
@@ -82,6 +83,7 @@ function App() {
       setTenzies(false)
       setCount(0)
       setTimer(0)
+      setLastTimer(0)
     } else {
       setDice(oldDice => oldDice.map(die => {
         return die.isHeld ? die :
@@ -124,13 +126,16 @@ function App() {
   return (
     <main className="d-flex justify-content-center align-items-center p-3"
     >
+      {tenzies && <Confetti
+        width={innerWidth}
+        height={innerHeight}
+      />}
+
       <div className="board rounded-3 p-3 d-flex justify-content-around align-items-center flex-column">
-        {tenzies && <Confetti
-          width={innerWidth}
-          height={innerHeight}
-        />}
 
         <Count count={count} />
+
+        <Record result={result} />
 
         <Timer timer={timer} lastTimer={lastTimer} />
 
